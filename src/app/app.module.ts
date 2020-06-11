@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SaveBlockComponent } from './save-block/save-block.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SaveBlockComponent
   ],
   imports: [
     BrowserModule,

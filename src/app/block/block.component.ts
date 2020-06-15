@@ -1,5 +1,6 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {Router} from "@angular/router";
+import {StylesService} from "../styles.service";
 
 @Component({
   selector: 'app-block',
@@ -8,15 +9,14 @@ import {Router} from "@angular/router";
 })
 export class BlockComponent implements OnInit {
 
-  constructor(private renderer: Renderer2, private router: Router) { }
+  constructor(private renderer: Renderer2, private router: Router, private stylesService: StylesService) { }
 
   ngOnInit(): void {
   }
   private unListenMouseMove: () => void;
   private unListenMouseUp: () => void;
   private unListenMouseOut: () => void;
-  public styles: Array<string> = [];
-  public showStyles: boolean;
+  public stylesList: Array<string> = [];
 
   ngOnDestroy() {
     this.unListenMouseMove();
@@ -29,9 +29,16 @@ export class BlockComponent implements OnInit {
    * @param clickSave - ивент нажатия кнопки "Сохранить"
    */
   onClickSave(clickSave: MouseEvent): void {
-
-    console.log(this.styles);
+    const block = this.renderer.selectRootElement('.block');
+    const blockStyles = getComputedStyle(block);
+    this.stylesList = [];
+    this.stylesList.push('width: ' + blockStyles.width);
+    this.stylesList.push('height: ' + blockStyles.height);
+    this.stylesList.push('left: ' + blockStyles.left);
+    this.stylesList.push('top: ' + blockStyles.top);
+    this.stylesService.setStylesList(this.stylesList);
     this.router.navigate(['home/save']);
+
   }
 
   /**

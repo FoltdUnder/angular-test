@@ -1,0 +1,7 @@
+<a routerLink="/home">Домой</a>
+<label>Ссылка на видео youTube
+  <input type="text" (change)="onInputChange($event)">
+</label>
+<p>Пример: https://www.youtube.com/watch?v=rXjLO_GMKdM</p>
+  <div class="video__youtube" [style]="'background: url('+ this.videoBgUrl + ')'">
+</div>

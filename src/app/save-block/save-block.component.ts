@@ -14,7 +14,6 @@ export class SaveBlockComponent implements OnInit, DoCheck {
   }
   ngDoCheck(){
     this.stylesList = this.stylesService.getStylesList();
-
   }
 }
 

@@ -19,9 +19,11 @@ export class BlockComponent implements OnInit {
   public stylesList: Array<string> = [];
 
   ngOnDestroy() {
-    this.unListenMouseMove();
-    this.unListenMouseUp();
-    this.unListenMouseOut();
+    if(this.unListenMouseMove){
+      this.unListenMouseMove();
+      this.unListenMouseUp();
+      this.unListenMouseOut();
+    }
   }
 
   /**

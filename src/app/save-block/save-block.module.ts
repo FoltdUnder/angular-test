@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { SaveBlockRoutingModule } from './save-block-routing.module';
+import {SaveBlockRoutingModule} from './save-block-routing.module';
+import {SaveBlockComponent} from "./save-block.component";
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SaveBlockComponent
+  ],
   imports: [
     CommonModule,
     SaveBlockRoutingModule

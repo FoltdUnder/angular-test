@@ -1,22 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SaveBlockComponent } from './save-block/save-block.component';
-import { MyIfDirective } from './my-if.directive';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import { MyBgDirective } from './my-bg.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SaveBlockComponent,
-    MyIfDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,15 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { VideoRoutingModule } from './video-routing.module';
-import { VideoComponent } from './video.component';
-
+import {VideoRoutingModule} from './video-routing.module';
+import {VideoComponent} from './video.component';
+import {MyIfDirective} from "../my-if.directive";
+import {MyBgDirective} from "../my-bg.directive";
 
 @NgModule({
-  declarations: [VideoComponent],
+  declarations: [
+    VideoComponent,
+    MyIfDirective,
+    MyBgDirective,
+  ],
   imports: [
     CommonModule,
-    VideoRoutingModule
+    VideoRoutingModule,
   ]
 })
 export class VideoModule { }

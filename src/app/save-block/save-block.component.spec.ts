@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SaveBlockComponent } from './save-block.component';
+import {SaveBlockComponent} from './save-block.component';
 
 describe('SaveBlockComponent', () => {
   let component: SaveBlockComponent;

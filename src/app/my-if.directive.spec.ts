@@ -1,4 +1,4 @@
-import { MyIfDirective } from './my-if.directive';
+import {MyIfDirective} from './my-if.directive';
 
 describe('MyIfDirective', () => {
   it('should create an instance', () => {

@@ -1,19 +1,22 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home.component";
-import {VideoComponent} from "../video/video.component";
 
 
 const routes: Routes = [
   {
-    path: 'block',
+    path: '',
     component: HomeComponent,
-    loadChildren: () => import('../block/block.module').then(m => m.BlockModule),
-  },
-  {
-    path: 'video',
-    component: VideoComponent,
-    loadChildren: () => import('../video/video.module').then(m => m.VideoModule),
+    children: [
+      {
+        path: 'block',
+        loadChildren: () => import('../block/block.module').then(m => m.BlockModule),
+      },
+      {
+        path: 'video',
+        loadChildren: () => import('../video/video.module').then(m => m.VideoModule),
+      }
+    ]
   }
 
 ];

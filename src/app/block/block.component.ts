@@ -39,7 +39,7 @@ export class BlockComponent implements OnInit {
     this.stylesList.push('left: ' + blockStyles.left);
     this.stylesList.push('top: ' + blockStyles.top);
     this.stylesService.setStylesList(this.stylesList);
-    this.router.navigate(['home/save']);
+    this.router.navigate(['home/block/save']);
 
   }
 

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {Page1Component} from "./page1/page1.component";
 import {Page2Component} from "./page2/page2.component";
+import {TableComponent} from "./table/table.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -16,6 +17,11 @@ const routes: Routes = [
   {
     path: 'page2',
     component: Page2Component,
+  },
+  {
+    path: 'table',
+    component: TableComponent,
+    loadChildren: () => import('./table/table.module').then(m => m.TableModule)
   },
   {path: '**', redirectTo: '/home'}
 ];

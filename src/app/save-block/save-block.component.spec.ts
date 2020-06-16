@@ -8,9 +8,9 @@ describe('SaveBlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveBlockComponent ]
+      declarations: [SaveBlockComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

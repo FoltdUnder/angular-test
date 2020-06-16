@@ -12,4 +12,5 @@ import {BlockComponent} from './block.component';
     BlockRoutingModule
   ]
 })
-export class BlockModule { }
+export class BlockModule {
+}

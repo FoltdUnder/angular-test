@@ -14,4 +14,5 @@ import {SaveBlockComponent} from "./save-block.component";
     SaveBlockRoutingModule
   ]
 })
-export class SaveBlockModule { }
+export class SaveBlockModule {
+}

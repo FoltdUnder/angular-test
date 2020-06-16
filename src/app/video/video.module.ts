@@ -17,4 +17,5 @@ import {MyBgDirective} from "../my-bg.directive";
     VideoRoutingModule,
   ]
 })
-export class VideoModule { }
+export class VideoModule {
+}

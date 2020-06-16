@@ -4,7 +4,7 @@ import {Page1Component} from "./page1/page1.component";
 import {Page2Component} from "./page2/page2.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home',pathMatch: 'full'},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
@@ -18,10 +18,11 @@ const routes: Routes = [
     component: Page2Component,
   },
   {path: '**', redirectTo: '/home'}
-  ];
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

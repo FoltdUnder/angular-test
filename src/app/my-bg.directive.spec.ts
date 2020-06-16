@@ -1,4 +1,4 @@
-import { MyBgDirective } from './my-bg.directive';
+import {MyBgDirective} from './my-bg.directive';
 
 describe('MyBgDirective', () => {
   it('should create an instance', () => {

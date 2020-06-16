@@ -1,5 +1,4 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {MyIfDirective} from "../my-if.directive";
 
 @Component({
   selector: 'app-video',
@@ -9,7 +8,10 @@ import {MyIfDirective} from "../my-if.directive";
 export class VideoComponent implements OnInit {
   public youTubeVideoId: string = 'nGowXe9bINU';
   public showVideoBg: boolean = false;
-  constructor( private renderer: Renderer2) { }
+
+  constructor(private renderer: Renderer2) {
+  }
+
   ngOnInit(): void {
   }
 
@@ -19,7 +21,7 @@ export class VideoComponent implements OnInit {
    */
   onInputChange(inputChangeEvent) {
     let equalPosition = inputChangeEvent.target.value.indexOf('v=');
-    this.youTubeVideoId = inputChangeEvent.target.value.slice(equalPosition+2);
+    this.youTubeVideoId = inputChangeEvent.target.value.slice(equalPosition + 2);
     this.showVideoBg = true;
   }
 
@@ -27,12 +29,12 @@ export class VideoComponent implements OnInit {
    * При нажатии на копку отображает блок с превью видео и меняет текст кнопки.
    * @param buttonClickEvent
    */
-  onClickButton(buttonClickEvent){
-    if(buttonClickEvent.target.innerText == 'Показать') {
-      this.renderer.selectRootElement('.video__youtube').style.display= 'block';
+  onClickButton(buttonClickEvent) {
+    if (buttonClickEvent.target.innerText == 'Показать') {
+      this.renderer.selectRootElement('.video__youtube').style.display = 'block';
       buttonClickEvent.target.innerText = 'Скрыть';
     } else {
-      this.renderer.selectRootElement('.video__youtube').style.display= 'none';
+      this.renderer.selectRootElement('.video__youtube').style.display = 'none';
       buttonClickEvent.target.innerText = 'Показать';
     }
 

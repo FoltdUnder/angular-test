@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InputExchangeService {
-  public data: string = '';
-  constructor() { }
-  setInputData(data: string){
-    this.data = data;
+  private data = new BehaviorSubject('');
+  public inputText = this.data.asObservable();
+  constructor() {
   }
-  getInputData(){
-    return this.data;
+
+  updateInputData(data: string) {
+    this.data.next(data);
   }
 }

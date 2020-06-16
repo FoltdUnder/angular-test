@@ -5,10 +5,14 @@ import {Injectable} from '@angular/core';
 })
 export class StylesService {
   public styleList: string[];
-  constructor() { }
-  setStylesList(styleList: string[]) {
-    this.styleList =  styleList;
+
+  constructor() {
   }
+
+  setStylesList(styleList: string[]) {
+    this.styleList = styleList;
+  }
+
   getStylesList() {
     return this.styleList;
   }

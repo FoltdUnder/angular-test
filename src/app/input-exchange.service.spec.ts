@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { InputExchangeService } from './input-exchange.service';
+import {InputExchangeService} from './input-exchange.service';
 
 describe('InputExchangeService', () => {
   let service: InputExchangeService;

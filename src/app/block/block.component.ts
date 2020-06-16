@@ -9,17 +9,19 @@ import {StylesService} from "../styles.service";
 })
 export class BlockComponent implements OnInit {
 
-  constructor(private renderer: Renderer2, private router: Router, private stylesService: StylesService) { }
+  constructor(private renderer: Renderer2, private router: Router, private stylesService: StylesService) {
+  }
 
   ngOnInit(): void {
   }
+
   private unListenMouseMove: () => void;
   private unListenMouseUp: () => void;
   private unListenMouseOut: () => void;
   public stylesList: Array<string> = [];
 
   ngOnDestroy() {
-    if(this.unListenMouseMove){
+    if (this.unListenMouseMove) {
       this.unListenMouseMove();
       this.unListenMouseUp();
       this.unListenMouseOut();

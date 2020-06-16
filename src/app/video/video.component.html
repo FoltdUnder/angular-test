@@ -3,6 +3,6 @@
   <input type="text" (change)="onInputChange($event)">
 </label>
 <p>Пример: https://www.youtube.com/watch?v=rXjLO_GMKdM</p>
-  <button *myIf="showVideoBg" (click)="onClickButton($event)">Показать</button>
-  <div class="video__youtube" [myBg]="youTubeVideoId" style="display: none;"></div>
+<button *myIf="showVideoBg" (click)="onClickButton($event)">Показать</button>
+<div class="video__youtube" [myBg]="youTubeVideoId" style="display: none;"></div>
 <router-outlet></router-outlet>

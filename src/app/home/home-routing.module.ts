@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home.component";
+import {Page1Component} from "../page1/page1.component";
 
 
 const routes: Routes = [
@@ -15,7 +16,7 @@ const routes: Routes = [
       {
         path: 'video',
         loadChildren: () => import('../video/video.module').then(m => m.VideoModule),
-      }
+      },
     ]
   }
 

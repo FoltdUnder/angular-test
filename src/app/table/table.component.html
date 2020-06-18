@@ -1,12 +1,21 @@
-<a routerLink="/home" >Домой</a>
+<a routerLink="/home">Домой</a>
 <br>
 <label>Введите размер таблицы:
-  <input type="number" (change)="onTableInputChange($event)">
+  <input type="number" (change)="onTableSizeInputChange($event)">
 </label>
-<table>
+<table *ngIf="tableValuesArray">
+  <thead >
+    <tr>
+      <td *ngFor="let header of tableHeaders" (click)="onClickTable($event)">{{header}}</td>
+    </tr>
+  </thead>
   <tbody>
-  <tr ></tr>
+  <tr *ngFor="let tr of tableValuesArray | sortCols: cellIndex : isIncrease ">
+    <td data-increase='true' *ngFor="let td of tr">{{td | hideNotInRange: inputRange.from : inputRange.to}}</td>
+  </tr>
   </tbody>
 </table>
+<ng5-slider *ngIf="tableValuesArray" (userChangeEnd)="onInputRangeChange($event)" value="0" highValue="100"
+            [options]="options"></ng5-slider>
 <router-outlet></router-outlet>
 

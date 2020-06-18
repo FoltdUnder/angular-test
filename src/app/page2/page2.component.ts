@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {InputExchangeService} from "../input-exchange.service";
 import {Subscription} from "rxjs";
 
@@ -10,16 +10,19 @@ import {Subscription} from "rxjs";
 export class Page2Component implements OnInit, OnDestroy {
   public inputText: string;
   private subs: Subscription;
+
   constructor(private inputExchangeService: InputExchangeService) {
   }
 
   ngOnInit(): void {
     this.subs = this.inputExchangeService.inputText.subscribe(data => this.inputText = data);
   }
-  onPageInputChange(event){
+
+  onPageInputChange(event) {
     this.inputExchangeService.updateInputData(event.target.value);
   }
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     this.subs.unsubscribe();
   }
 }

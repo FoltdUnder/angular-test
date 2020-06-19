@@ -53,11 +53,11 @@ export class FormsComponent implements OnInit, DoCheck {
     let monthlyPayment = this.getMonthlyPayment();
     console.log('monthly = ' + this.getMonthlyPayment());
     let balance: number = this.creditForm.value.sum;
-    let monthlyBankPart: number = balance / 1200;//точно считается не так
+    let monthlyBankPart: number = (balance * this.creditForm.value.percent / 100) / 12;//точно считается не так
     let monthlyDebtPart: number = monthlyPayment - monthlyBankPart;
     let paymentsArray: object[] = [];
     for (let i = 0; i < this.months; i++) {
-      monthlyBankPart = balance / 120;
+      monthlyBankPart = (balance * this.creditForm.value.percent / 100) / 12;
       monthlyDebtPart = monthlyPayment - monthlyBankPart;
       paymentsArray.push({
         balance: balance.toFixed(2),

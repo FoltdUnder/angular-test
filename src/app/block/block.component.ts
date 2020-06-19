@@ -1,25 +1,23 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {Router} from "@angular/router";
-import {StylesService} from "../styles.service";
+import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Router} from '@angular/router';
+import {StylesService} from '../styles.service';
 
 @Component({
   selector: 'app-block',
   templateUrl: './block.component.html',
   styleUrls: ['./block.component.scss']
 })
-export class BlockComponent implements OnInit {
+export class BlockComponent implements OnInit, OnDestroy {
+  private unListenMouseMove: () => void;
+  private unListenMouseUp: () => void;
+  private unListenMouseOut: () => void;
+  public stylesList: Array<string> = [];
 
   constructor(private renderer: Renderer2, private router: Router, private stylesService: StylesService) {
   }
 
   ngOnInit(): void {
   }
-
-  private unListenMouseMove: () => void;
-  private unListenMouseUp: () => void;
-  private unListenMouseOut: () => void;
-  public stylesList: Array<string> = [];
-
   ngOnDestroy() {
     if (this.unListenMouseMove) {
       this.unListenMouseMove();
@@ -42,7 +40,6 @@ export class BlockComponent implements OnInit {
     this.stylesList.push('top: ' + blockStyles.top);
     this.stylesService.setStylesList(this.stylesList);
     this.router.navigate(['home/block/save']);
-
   }
 
   /**

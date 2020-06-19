@@ -1,0 +1,42 @@
+<a routerLink="/home">Домой</a>
+<form [formGroup]="creditForm" (ngSubmit)="onSubmit()">
+  <label>Сумма</label>
+    <input type="number" formControlName="sum" required>
+  <app-field-display-error
+    [displayError]="isFieldValid('sum')"
+    errorMsg="Please inform your name">
+  </app-field-display-error>
+  <label>Проценты</label>
+    <input type="number" formControlName="percent">
+  <app-field-display-error
+    [displayError]="isFieldValid('percent')"
+    errorMsg="Please inform your name">
+  </app-field-display-error>
+  <label>Срок</label>
+  <select type="number" required="" formControlName="years">
+    <option>3 года</option>
+    <option>5 лет</option>
+    <option>7 лет</option>
+  </select>
+  <button type="submit">Расчитать</button>
+  <label *ngIf="paymentsArray">1
+    <input type="range" min="1" [max]="months" (input)="onPeriodChange($event)">{{months}}
+    <span>Месяцы: {{period}}</span>
+  </label>
+</form>
+<table *ngIf="paymentsArray">
+  <thead>
+  <tr>
+    <th *ngFor="let title of tableHeaders">{{title}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let payment of paymentsArray | period: period; let i = index">
+    <td>{{i+1}}</td>
+    <td>{{payment.balance}}</td>
+    <td>{{payment.debtPart}}</td>
+    <td>{{payment.bankPart}}</td>
+    <td>{{payment.monthlyPayment}}</td>
+  </tr>
+  </tbody>
+</table>

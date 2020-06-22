@@ -8,18 +8,15 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class FormsComponent implements OnInit, DoCheck {
   public creditForm = new FormGroup({
-    sum: new FormControl(null, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    sum: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]\d*(\.\d+)?$/)]),
     percent: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]\d*(\.\d+)?$/)]),
-    years: new FormControl(1, [Validators.required]),
+    years: new FormControl(null, [Validators.required]),
     period: new FormControl('')
   });
   public paymentsArray: object[];
   public tableHeaders = ['Месяц', 'Остаток кредита', 'Основной платёж', 'Процент банку', 'Ежемесячный платёж'];
   public months: number;
   public period: number;
-
-  constructor() {
-  }
 
   ngOnInit(): void {
   }
@@ -28,7 +25,7 @@ export class FormsComponent implements OnInit, DoCheck {
   }
 
   isFieldValid(field: string) {
-    return !this.creditForm.get(field).valid && this.creditForm.get(field).touched;
+    return !this.creditForm.get(field).valid && !this.creditForm.get(field).pristine;
   }
 
   onSubmit() {
@@ -36,11 +33,28 @@ export class FormsComponent implements OnInit, DoCheck {
       this.months = this.creditForm.value.years.slice(0, 1) * 12;
       this.period = this.months;
       this.paymentsArray = this.getPaymentsArray();
+    } else {
+      let pristine = document.querySelectorAll('.ng-pristine');
+      pristine.forEach(field => {
+        if (field.tagName !== 'FORM') {
+          field.style.borderColor = 'red';
+        }
+      });
     }
   }
 
   onPeriodChange(event) {
     this.period = event.target.value;
+  }
+
+  onInputBlur(event) {
+    let fieldName = event.target.getAttribute('ng-reflect-name');
+    if (event.target.value.indexOf('.') !== -1 && fieldName === 'percent') {
+      event.target.value = event.target.value.slice(0, event.target.value.indexOf('.') + 3);
+    }
+    if (this.creditForm.get(fieldName).valid) {
+      event.target.style.borderColor = '';
+    }
   }
 
   getMonthlyPayment(): number {
@@ -51,9 +65,8 @@ export class FormsComponent implements OnInit, DoCheck {
 
   getPaymentsArray(): object[] {
     let monthlyPayment = this.getMonthlyPayment();
-    console.log('monthly = ' + this.getMonthlyPayment());
     let balance: number = this.creditForm.value.sum;
-    let monthlyBankPart: number = (balance * this.creditForm.value.percent / 100) / 12;//точно считается не так
+    let monthlyBankPart: number = (balance * this.creditForm.value.percent / 100) / 12;
     let monthlyDebtPart: number = monthlyPayment - monthlyBankPart;
     let paymentsArray: object[] = [];
     for (let i = 0; i < this.months; i++) {
@@ -66,7 +79,6 @@ export class FormsComponent implements OnInit, DoCheck {
         debtPart: monthlyDebtPart.toFixed(2)
       });
       balance -= monthlyDebtPart;
-
     }
     return paymentsArray;
   }

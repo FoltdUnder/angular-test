@@ -1,24 +1,28 @@
 <a routerLink="/home">Домой</a>
 <form [formGroup]="creditForm" (ngSubmit)="onSubmit()">
   <label>Сумма</label>
-    <input type="number" formControlName="sum" required>
+    <input type="number" formControlName="sum" (blur)="onInputBlur($event)" required>
   <app-field-display-error
     [displayError]="isFieldValid('sum')"
-    errorMsg="Please inform your name">
+    errorMessage="Допустимый формат для суммы 1-9.00">
   </app-field-display-error>
   <label>Проценты</label>
-    <input type="number" formControlName="percent">
+    <input type="number" formControlName="percent" (blur)="onInputBlur($event)" required>
   <app-field-display-error
     [displayError]="isFieldValid('percent')"
-    errorMsg="Please inform your name">
+    errorMessage="Допустимый формат для процентов 0-9.0-9">
   </app-field-display-error>
   <label>Срок</label>
-  <select type="number" required="" formControlName="years">
+  <select type="number" formControlName="years" (blur)="onInputBlur($event)" required>
     <option>3 года</option>
     <option>5 лет</option>
     <option>7 лет</option>
   </select>
-  <button type="submit">Расчитать</button>
+  <app-field-display-error
+    [displayError]="isFieldValid('years')"
+    errorMessage="Нужно выбрать срок погашения">
+  </app-field-display-error>
+  <button type="submit" >Расчитать</button>
   <label *ngIf="paymentsArray">1
     <input type="range" min="1" [max]="months" (input)="onPeriodChange($event)">{{months}}
     <span>Месяцы: {{period}}</span>

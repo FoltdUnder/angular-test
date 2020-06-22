@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./field-display-error.component.scss']
 })
 export class FieldDisplayErrorComponent implements OnInit {
-  @Input() errorMsg: string;
+  @Input() errorMessage: string;
   @Input() displayError: boolean;
   constructor() { }
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +7,6 @@ import {BehaviorSubject} from "rxjs";
 export class InputExchangeService {
   private data = new BehaviorSubject('');
   public inputText = this.data.asObservable();
-
-  constructor() {
-  }
 
   updateInputData(data: string) {
     this.data.next(data);

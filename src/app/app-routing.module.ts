@@ -3,7 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {Page1Component}       from './page1/page1.component';
 import {Page2Component}       from './page2/page2.component';
 import {TableComponent}       from './table/table.component';
-import {FormsComponent}       from "./forms/forms.component";
+import {FormsComponent}       from './forms/forms.component';
+import {ServerComponent}      from './server/server.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'forms',
     component: FormsComponent,
     loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule)
+  },
+  {
+    path: 'server',
+    component: ServerComponent,
+    loadChildren: () => import('./server/server.module').then(m => m.ServerModule)
   },
   {path: '**', redirectTo: '/home'}
 ];

@@ -1,0 +1,28 @@
+<a routerLink="/home">Домой</a>
+
+<form [formGroup]="serverForm" (ngSubmit)="onSubmit()">
+  <label>Метод</label>
+  <input type="text" formControlName="serverMethod"">
+  <div *ngIf="isFieldValid('serverMethod')" class="serverError">
+    Допустимы только латинские символы
+  </div>
+  <label>Способ отправки</label>
+  <select formControlName="sendMethod">
+    <option>POST</option>
+    <option>GET</option>
+  </select>
+  <label>Данные в формате JSON</label>
+  <textarea type="text" formControlName="data" rows="15"></textarea>
+  <button type="submit">Отправить</button>
+</form>
+<div *ngIf="isRequestError" class="serverError">Запрос вернулся с ошибкой</div>
+<div *ngIf="body">
+  <p>Время ответа: </p>
+  <p>Код ответа: {{response.status}}</p>
+  <p>Заголовки ответа: </p>
+  <pre *ngFor="let item of headers">{{item}}</pre>
+  <p>Текст ответа: </p>
+  <pre [innerHTML]="json"></pre>
+</div>
+
+

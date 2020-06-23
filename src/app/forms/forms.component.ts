@@ -45,7 +45,7 @@ export class FormsComponent implements OnInit, DoCheck {
       let pristine = document.querySelectorAll('.ng-pristine');
       pristine.forEach(field => {
         if (field.tagName !== 'FORM') {
-          field.style.borderColor = 'red';
+          (field as HTMLElement).style.borderColor = 'red';
         }
       });
     }

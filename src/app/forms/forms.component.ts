@@ -24,10 +24,18 @@ export class FormsComponent implements OnInit, DoCheck {
   ngDoCheck() {
   }
 
+  /**
+   * Проверка поля ввода, если оно невалидно то появляется подсказка с форматом ввода
+   * @param field - название FormControl
+   */
   isFieldValid(field: string) {
     return !this.creditForm.get(field).valid && !this.creditForm.get(field).pristine;
   }
 
+  /**
+   * Если форма валидна то устанавливаюстя свойства для дальнейших расчётов,
+   * если нет - границы невалидных полей становятся красными.
+   */
   onSubmit() {
     if (this.creditForm.valid === true) {
       this.months = this.creditForm.value.years.slice(0, 1) * 12;
@@ -47,6 +55,10 @@ export class FormsComponent implements OnInit, DoCheck {
     this.period = event.target.value;
   }
 
+  /**
+   * Округление до сотых если в поле есть точка
+   * @param event
+   */
   onInputBlur(event) {
     let fieldName = event.target.getAttribute('ng-reflect-name');
     if (event.target.value.indexOf('.') !== -1 && fieldName === 'percent') {
@@ -57,12 +69,18 @@ export class FormsComponent implements OnInit, DoCheck {
     }
   }
 
+  /**
+   * Вычисление месячного платежа
+   */
   getMonthlyPayment(): number {
     const sum: number = this.creditForm.value.sum;
     const p: number = this.creditForm.value.percent / 1200;
     return sum * (p + (p / (((1 + p) ** this.months) - 1)));
   }
 
+  /**
+   * Вычисление данных для построения таблицы выплат
+   */
   getPaymentsArray(): object[] {
     let monthlyPayment = this.getMonthlyPayment();
     let balance: number = this.creditForm.value.sum;

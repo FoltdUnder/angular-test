@@ -9,3 +9,9 @@ label{
 .serverError{
   color: red;
 }
+input.ng-touched.ng-invalid{
+  border-color: red;
+}
+textarea.ng-invalid.ng-touched{
+  border-color: red;
+}

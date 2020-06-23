@@ -2,22 +2,25 @@
 
 <form [formGroup]="serverForm" (ngSubmit)="onSubmit()">
   <label>Метод</label>
-  <input type="text" formControlName="serverMethod"">
+  <input type="text" formControlName="serverMethod" (blur)="onInputBlur($event)">
   <div *ngIf="isFieldValid('serverMethod')" class="serverError">
     Допустимы только латинские символы
   </div>
   <label>Способ отправки</label>
-  <select formControlName="sendMethod">
+  <select formControlName="sendMethod" (blur)="onInputBlur($event)">
     <option>POST</option>
     <option>GET</option>
   </select>
   <label>Данные в формате JSON</label>
-  <textarea type="text" formControlName="data" rows="15"></textarea>
+  <textarea type="text" formControlName="data" rows="15" (blur)="onInputBlur($event)"></textarea>
+  <div *ngIf="isFieldValid('data')" class="serverError">
+    Допустимы только латинские символы
+  </div>
   <button type="submit">Отправить</button>
 </form>
 <div *ngIf="isRequestError" class="serverError">Запрос вернулся с ошибкой</div>
 <div *ngIf="body">
-  <p>Время ответа: </p>
+  <p>Время ответа: {{responseTime}} </p>
   <p>Код ответа: {{response.status}}</p>
   <p>Заголовки ответа: </p>
   <pre *ngFor="let item of headers">{{item}}</pre>

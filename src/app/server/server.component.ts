@@ -10,9 +10,12 @@ import {retry, timeout}                     from 'rxjs/operators';
 })
 export class ServerComponent implements OnInit {
   public serverForm = new FormGroup({
-    serverMethod: new FormControl(null, [Validators.required, Validators.pattern(/^[a-z]+$/)]),
-    sendMethod: new FormControl(null, [Validators.required]),
-    data: new FormControl(null, [Validators.required]),
+    serverMethod: new FormControl(null,
+      [Validators.required, Validators.pattern(/^\w+$/)]),
+    sendMethod: new FormControl(null,
+      [Validators.required]),
+    data: new FormControl(null,
+      [Validators.required]),
   });
   public response;
   public body = null;
@@ -20,8 +23,7 @@ export class ServerComponent implements OnInit {
   public status;
   public json;
   public isRequestError = false;
-  private errorCount = 0;
-
+  public responseTime;
   constructor(private server: ServerService) {
   }
 
@@ -29,11 +31,14 @@ export class ServerComponent implements OnInit {
   }
 
   onSubmit() {
+    let startDate = new Date();
     let formMethod = this.serverForm.value.serverMethod;
     let formData = this.serverForm.value.data;
     if (this.serverForm.valid === true) {
       if (this.serverForm.value.sendMethod === 'POST') {
-        this.server.postData(formMethod, formData).pipe(timeout(200), retry(2)).subscribe(response => {
+        this.server.postData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
+          // @ts-ignore
+            this.responseTime = Math.abs(new Date() - startDate);
             this.isRequestError = false;
             this.response = response;
             const keys = this.response.headers.keys();
@@ -42,12 +47,12 @@ export class ServerComponent implements OnInit {
             this.json = JSON.stringify(this.body.data.data, null, 4);
             this.json = this.json.split('\\n').join('<br>').split('\\').join('');
           },
-          error => {
-            this.isRequestError = true;
-          }
+          () => this.isRequestError = true
         );
       } else {
-        this.server.getData(formMethod, formData).pipe(timeout(200), retry(2)).subscribe(response => {
+        this.server.getData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
+            // @ts-ignore
+            this.responseTime = Math.abs(new Date() - startDate);
             this.isRequestError = false;
             this.response = response;
             const keys = this.response.headers.keys();
@@ -56,7 +61,7 @@ export class ServerComponent implements OnInit {
             this.json = JSON.stringify(this.body.data.data, null, 4);
             this.json = this.json.split(/{|}|,|[|]/).join('<br>').split('\\').join('');
           },
-          error => this.isRequestError = true
+          () => this.isRequestError = true
         );
       }
     } else {
@@ -70,5 +75,11 @@ export class ServerComponent implements OnInit {
   }
   isFieldValid(field: string) {
     return !this.serverForm.get(field).valid && !this.serverForm.get(field).pristine;
+  }
+  onInputBlur(event) {
+    let fieldName = event.target.getAttribute('ng-reflect-name');
+    if (this.serverForm.get(fieldName).valid) {
+      event.target.style.borderColor = '';
+    }
   }
 }

@@ -15,7 +15,6 @@ export class ServerService {
     let body = new HttpParams();
     body = body.append('method', formMethod);
     body = body.append( 'data', formData);
-    // date = date.toString();
     return this.http.post(`https://scloud.ru/user_panel/test_angular.php`,
       body, {reportProgress: true, observe: 'response'});
   }

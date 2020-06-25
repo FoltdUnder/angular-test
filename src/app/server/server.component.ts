@@ -38,7 +38,7 @@ export class ServerComponent implements OnInit {
       if (this.serverForm.value.sendMethod === 'POST') {
         this.server.postData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
           // @ts-ignore
-            this.responseTime = Math.abs(new Date() - startDate);
+            this.responseTime = Math.abs(new Date() - startDate) % 20000;
             this.isRequestError = false;
             this.response = response;
             const keys = this.response.headers.keys();
@@ -52,7 +52,7 @@ export class ServerComponent implements OnInit {
       } else {
         this.server.getData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
             // @ts-ignore
-            this.responseTime = Math.abs(new Date() - startDate);
+            this.responseTime = Math.abs(new Date() - startDate) % 20000;
             this.isRequestError = false;
             this.response = response;
             const keys = this.response.headers.keys();

@@ -20,7 +20,7 @@
 </form>
 <div *ngIf="isRequestError" class="serverError">Запрос вернулся с ошибкой</div>
 <div *ngIf="body">
-  <p>Время ответа: {{responseTime}} </p>
+  <p>Время ответа: {{responseTime}}ms </p>
   <p>Код ответа: {{response.status}}</p>
   <p>Заголовки ответа: </p>
   <pre *ngFor="let item of headers">{{item}}</pre>

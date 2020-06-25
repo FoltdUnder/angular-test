@@ -30,6 +30,9 @@ export class ServerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Выполняет запрос если форма валидна или выделяет красной рамкой невалидные поля ввода
+   */
   onSubmit() {
     let startDate = new Date();
     let formMethod = this.serverForm.value.serverMethod;
@@ -73,9 +76,19 @@ export class ServerComponent implements OnInit {
       });
     }
   }
+
+  /**
+   * Проверка поля на валидность
+   * @param field
+   */
   isFieldValid(field: string) {
     return !this.serverForm.get(field).valid && !this.serverForm.get(field).pristine;
   }
+
+  /**
+   * Отменяет стиль для границ невалидных полей ввода
+   * @param event
+   */
   onInputBlur(event) {
     let fieldName = event.target.getAttribute('ng-reflect-name');
     if (this.serverForm.get(fieldName).valid) {

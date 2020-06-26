@@ -14,9 +14,11 @@
   <label>Данные в формате JSON</label>
   <textarea type="text" formControlName="data" rows="15" (blur)="onInputBlur($event)"></textarea>
   <div *ngIf="isFieldValid('data')" class="serverError">
-    Допустимы только латинские символы
+    Данные должны быть в формате JSON: &#123; "foo" : "bar" } <br>
+    Вложенность не разрешена.
   </div>
   <button type="submit">Отправить</button>
+  <div *ngIf="isNested" class="serverError">Обнаружена вложенность</div>
 </form>
 <div *ngIf="isRequestError" class="serverError">Запрос вернулся с ошибкой</div>
 <div *ngIf="body">

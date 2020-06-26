@@ -10,12 +10,11 @@ import {retry, timeout}                     from 'rxjs/operators';
 })
 export class ServerComponent implements OnInit {
   public serverForm = new FormGroup({
-    serverMethod: new FormControl(null,
-      [Validators.required, Validators.pattern(/^\w+$/)]),
+    serverMethod: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
     sendMethod: new FormControl(null,
       [Validators.required]),
     data: new FormControl(null,
-      [Validators.required]),
+      [Validators.required, Validators.pattern(/\{([^\{.\}]|[\n\r]*)*\}/)])
   });
   public response;
   public body = null;
@@ -24,6 +23,7 @@ export class ServerComponent implements OnInit {
   public json;
   public isRequestError = false;
   public responseTime;
+  public isNested: boolean;
   constructor(private server: ServerService) {
   }
 
@@ -34,39 +34,29 @@ export class ServerComponent implements OnInit {
    * Выполняет запрос если форма валидна или выделяет красной рамкой невалидные поля ввода
    */
   onSubmit() {
-    let startDate = new Date();
-    let formMethod = this.serverForm.value.serverMethod;
-    let formData = this.serverForm.value.data;
+    if (this.serverForm.value.data.split('{').length > 2 || this.serverForm.value.data.split('}').length > 2) {
+      this.isNested = true;
+      return;
+    }
+    this.isNested = false;
+
     if (this.serverForm.valid === true) {
-      if (this.serverForm.value.sendMethod === 'POST') {
-        this.server.postData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
-          // @ts-ignore
-            this.responseTime = Math.abs(new Date() - startDate) % 20000;
-            this.isRequestError = false;
-            this.response = response;
-            const keys = this.response.headers.keys();
-            this.body = this.response.body;
-            this.headers = keys.map(key => `${key}: ${this.response.headers.get(key)}`);
-            this.json = JSON.stringify(this.body.data.data, null, 4);
-            this.json = this.json.split('\\n').join('<br>').split('\\').join('');
-          },
-          () => this.isRequestError = true
-        );
-      } else {
-        this.server.getData(formMethod, formData).pipe(timeout(20000), retry(2)).subscribe(response => {
-            // @ts-ignore
-            this.responseTime = Math.abs(new Date() - startDate) % 20000;
-            this.isRequestError = false;
-            this.response = response;
-            const keys = this.response.headers.keys();
-            this.body = this.response.body;
-            this.headers = keys.map(key => `${key}: ${this.response.headers.get(key)}`);
-            this.json = JSON.stringify(this.body.data.data, null, 4);
-            this.json = this.json.split(/{|}|,|[|]/).join('<br>').split('\\').join('');
-          },
-          () => this.isRequestError = true
-        );
-      }
+      let startDate = new Date();
+      let formMethod = this.serverForm.value.serverMethod;
+      let sendMethod = this.serverForm.value.sendMethod;
+      let formData = JSON.parse(this.serverForm.value.data);
+      this.server.doRequest(sendMethod, formMethod, formData).subscribe(response => {
+        // @ts-ignore
+        this.responseTime = Math.abs(new Date() - startDate) % 20000;
+        this.isRequestError = false;
+        this.response = response;
+        console.dir('response: ');
+        console.dir(response);
+        this.body = this.response.body;
+        const keys = this.response.headers.keys();
+        this.headers = keys.map(key => `${key}: ${this.response.headers.get(key)}`);
+        this.json = JSON.stringify(this.body, null, 4);
+      });
     } else {
       let pristine = document.querySelectorAll('.ng-pristine');
       pristine.forEach(field => {
